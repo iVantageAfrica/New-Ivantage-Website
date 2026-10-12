@@ -14,3 +14,6 @@
 - Centralize the visual system in src/styles.css and use shared Button variants for actions to keep branding consistent.
 - Contact inquiries use a public validated server function with an insert-only anonymous database client; visitors must never read submitted personal data.
 - Keep shared inquiry validation in a browser-safe schema module used by the form, server function, and tests so acceptance rules stay consistent.
+
+- Shared navigation and footer live in the root shell; named sections and company/service details use dedicated leaf routes for direct linking.
+- Verified company logos and product lists live in src/content/portfolio.ts; missing products stay empty rather than presenting generated concepts as delivered work.
