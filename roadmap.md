@@ -11,3 +11,8 @@
 ## Inner-page visual upgrade
 - [ ] Give Work, company portfolios, Services, service details, About, and Contact distinctive polished layouts.
 - [ ] Verify desktop/mobile visuals, page navigation, and form preservation.
+
+## Professional company website refinement
+- [ ] Add the verified company email info@ivantage.africa.com to Contact and the footer.
+- [ ] Replace unsuitable decorative imagery and polish the website with restrained animation.
+- [ ] Verify page navigation, contact links, and layouts.
