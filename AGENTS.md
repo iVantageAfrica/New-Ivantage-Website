@@ -18,3 +18,4 @@
 - Shared navigation and footer live in the root shell; named sections and company/service details use dedicated leaf routes for direct linking.
 - Verified company logos and product lists live in src/content/portfolio.ts; missing products stay empty rather than presenting generated concepts as delivered work.
 - Inner pages share editorial hero and process components; page-specific layouts remain in their leaf routes to keep visual updates consistent without coupling unrelated content.
+- Public company contact details are centralized in src/content/contact.ts and reused across pages so contact links stay consistent.
