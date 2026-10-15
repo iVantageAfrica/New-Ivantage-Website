@@ -13,6 +13,8 @@ import { services as serviceContent } from '@/content/services';
 import property from '@/assets/property-project.jpg';
 import construction from '@/assets/construction-project.jpg';
 import rail from '@/assets/rail-project.jpg';
+import { companies } from '@/content/portfolio';
+const clientIcons: Record<string, typeof Landmark> = { 'imperial-homes': Landmark, homeco: House, buildconnect: HardHat, 'nigerian-railway': TrainFront };
 
 export const Route = createFileRoute('/')({
   head: () => ({ meta: [
