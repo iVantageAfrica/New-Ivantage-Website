@@ -50,7 +50,19 @@ function Index() {
    media.add('(prefers-reduced-motion: no-preference)', () => {
      const ctx = gsap.context(() => {
        gsap.from('.hero-enter', { y: 25, opacity: 0, duration: .85, stagger: .12, ease: 'power3.out', clearProps: 'all' });
+       gsap.from('.hero-chip', { y: 30, opacity: 0, scale: .9, duration: .9, stagger: .15, delay: .5, ease: 'back.out(1.6)', clearProps: 'opacity,scale' });
+       gsap.to('.chip-a', { y: -14, duration: 2.6, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+       gsap.to('.chip-b', { y: 12, duration: 3.1, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: .4 });
+       gsap.to('.chip-c', { y: -10, duration: 2.9, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: .8 });
+       gsap.to('.hero-art', { yPercent: 10, scale: 1.06, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+       gsap.to('.hero-glow', { yPercent: -30, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
        gsap.utils.toArray<HTMLElement>('.reveal').forEach(el => { gsap.from(el, { y: 30, opacity: 0, duration: .8, ease: 'power2.out', clearProps: 'all', scrollTrigger: { trigger: el, start: 'top 92%', once: true } }); });
+       gsap.utils.toArray<HTMLElement>('.service-grid, .process-grid, .principles, .client-row').forEach(group => {
+         gsap.from(group.children, { y: 34, opacity: 0, duration: .75, stagger: .1, ease: 'power3.out', clearProps: 'all', scrollTrigger: { trigger: group, start: 'top 90%', once: true } });
+       });
+       gsap.utils.toArray<HTMLElement>('.step-number').forEach(el => {
+         gsap.from(el, { innerText: 0, snap: { innerText: 1 }, duration: 1, ease: 'power1.out', scrollTrigger: { trigger: el, start: 'top 92%', once: true } });
+       });
      }, root);
      return () => ctx.revert();
    });
