@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import logo from '@/assets/ivantage-logo.png.asset.json';
 import { services } from '@/content/services';
 import { contact } from '@/content/contact';
-const nav = [{label:'Work',to:'/work'},{label:'Services',to:'/services'},{label:'About',to:'/about'},{label:'Contact',to:'/contact'}] as const;
+const nav = [{label:'Home',to:'/'},{label:'Work',to:'/work'},{label:'Services',to:'/services'},{label:'About',to:'/about'},{label:'Contact',to:'/contact'}] as const;
 export function SiteHeader() {
  const [menu,setMenu]=useState(false);
  const path=useLocation({select:l=>l.pathname});
