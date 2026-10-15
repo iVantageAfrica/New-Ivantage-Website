@@ -61,7 +61,7 @@ function Index() {
          gsap.from(group.children, { y: 34, opacity: 0, duration: .75, stagger: .1, ease: 'power3.out', clearProps: 'all', scrollTrigger: { trigger: group, start: 'top 90%', once: true } });
        });
        gsap.utils.toArray<HTMLElement>('.step-number').forEach(el => {
-         gsap.from(el, { innerText: 0, snap: { innerText: 1 }, duration: 1, ease: 'power1.out', scrollTrigger: { trigger: el, start: 'top 92%', once: true } });
+         gsap.from(el, { x: -18, opacity: 0, duration: .7, ease: 'power3.out', clearProps: 'all', scrollTrigger: { trigger: el, start: 'top 92%', once: true } });
        });
      }, root);
      return () => ctx.revert();
