@@ -186,3 +186,12 @@ a { text-decoration:none; } button,a,input,select,textarea { -webkit-tap-highlig
 @media(max-width:1024px){.home-hero-grid{gap:40px;}.home-hero h1{font-size:46px;}}
 @media(max-width:800px){.home-hero-grid{grid-template-columns:1fr;padding-top:48px;padding-bottom:56px;}.home-hero h1{font-size:38px;}.home-hero-text>p{font-size:15px;}}
 @media(max-width:380px){.home-hero h1{font-size:33px;}}
+
+/* Hero polish */
+@keyframes heroShine{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+@keyframes badgePulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.55;transform:scale(.82);}}
+@keyframes mediaFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.home-hero h1 span{background:linear-gradient(120deg,var(--primary) 20%,color-mix(in oklab,var(--primary) 55%,white) 50%,var(--primary) 80%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:heroShine 6s ease-in-out infinite;}
+.home-hero-badge .status-dot{animation:badgePulse 2.2s ease-in-out infinite;}
+.home-hero-media{animation:mediaFloat 7s ease-in-out infinite;}
+@media(prefers-reduced-motion:reduce){.home-hero h1 span,.home-hero-badge .status-dot,.home-hero-media{animation:none;}}
