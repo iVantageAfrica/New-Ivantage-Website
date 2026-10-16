@@ -169,3 +169,20 @@ a { text-decoration:none; } button,a,input,select,textarea { -webkit-tap-highlig
 @media(max-width:1024px){.hero-chips{display:none;}.client-row{grid-template-columns:1fr 1fr;}}
 @media(max-width:700px){.hero h1{font-size:42px;}.client-row{grid-template-columns:1fr;gap:10px;}.client-logo-card{padding:12px 14px;}}
 @media(prefers-reduced-motion:reduce){.hero-chip,.hero-glow{animation:none;}}
+
+/* Clean home hero */
+.home-hero{background:linear-gradient(180deg,var(--hero-surface),var(--background));border-bottom:1px solid var(--border);}
+.home-hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center;padding-top:88px;padding-bottom:88px;}
+.home-hero-badge{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:500;color:var(--muted-foreground);background:var(--background);}
+.home-hero h1{font-size:60px;line-height:1.08;font-weight:650;letter-spacing:-.025em;margin:24px 0 20px;max-width:580px;}
+.home-hero h1 span{color:var(--primary);}
+.home-hero-text>p{font-size:17px;line-height:1.7;color:var(--muted-foreground);max-width:500px;}
+.home-hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;}
+.home-hero-points{display:flex;flex-wrap:wrap;gap:8px 22px;margin:34px 0 0;padding:0;list-style:none;font-size:13px;color:var(--muted-foreground);}
+.home-hero-points li{display:flex;align-items:center;gap:7px;}.home-hero-points svg{color:var(--primary);}
+.home-hero-media{border-radius:20px;overflow:hidden;border:1px solid var(--border);box-shadow:0 30px 60px -30px color-mix(in oklab,var(--foreground) 30%,transparent);aspect-ratio:4/3;}
+.home-hero-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s ease;}
+.home-hero-media:hover img{transform:scale(1.03);}
+@media(max-width:1024px){.home-hero-grid{gap:40px;}.home-hero h1{font-size:46px;}}
+@media(max-width:800px){.home-hero-grid{grid-template-columns:1fr;padding-top:48px;padding-bottom:56px;}.home-hero h1{font-size:38px;}.home-hero-text>p{font-size:15px;}}
+@media(max-width:380px){.home-hero h1{font-size:33px;}}

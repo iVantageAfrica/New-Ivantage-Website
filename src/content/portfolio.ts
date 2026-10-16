@@ -56,12 +56,12 @@ export const companies: Company[] = [
         features: [],
       },
       {
-        slug: 'learning-management-system',
-        name: 'Learning Management System',
-        category: 'Enterprise software',
+        slug: 'loan-management-system',
+        name: 'Loan Management System',
+        category: 'Banking software',
         summary:
-          'An internal learning platform for delivering courses, tracking progress, and supporting staff development.',
-        screenshots: [{ url: imperialLms, alt: 'Imperial Homes learning management system screen' }],
+          'A loan management platform for processing applications, tracking repayments, and managing the full loan lifecycle.',
+        screenshots: [{ url: imperialLms, alt: 'Imperial Homes loan management system screen' }],
         features: [],
       },
     ],
