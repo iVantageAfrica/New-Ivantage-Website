@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ArrowDown, Menu, X, Code2, Smartphone, Layers3, PenTool, Landmark, House, HardHat, TrainFront, Check, MoveUpRight } from 'lucide-react';
+import { ArrowUpRight, ArrowDown, Menu, X, Code2, Smartphone, Layers3, PenTool, Landmark, House, HardHat, TrainFront, Check, MoveUpRight, Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '@/components/ui/button';
@@ -38,8 +38,18 @@ function Index() {
    const media = gsap.matchMedia();
    media.add('(prefers-reduced-motion: no-preference)', () => {
      const ctx = gsap.context(() => {
-       gsap.from('.hero-enter', { y: 25, opacity: 0, duration: .85, stagger: .12, ease: 'power3.out', clearProps: 'all' });
-       gsap.from('.hero-media', { y: 30, opacity: 0, duration: 1.1, delay: .2, ease: 'power3.out', clearProps: 'all' });
+       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+       tl.from('.home-hero-badge', { y: 18, opacity: 0, duration: .55, clearProps: 'all' })
+         .from('.home-hero h1', { y: 36, opacity: 0, duration: .95, clearProps: 'all' }, '-=.25')
+         .from('.home-hero-text > p', { y: 22, opacity: 0, duration: .7, clearProps: 'all' }, '-=.55')
+         .from('.home-hero-actions', { y: 20, opacity: 0, duration: .65, clearProps: 'all' }, '-=.45')
+         .from('.home-hero-points li', { y: 16, opacity: 0, duration: .5, stagger: .08, clearProps: 'all' }, '-=.4')
+         .from('.home-hero-media', { y: 44, opacity: 0, scale: .96, duration: 1, clearProps: 'all' }, '-=.75')
+         .from('.home-hero-media-glow', { opacity: 0, scale: .9, duration: 1.1, clearProps: 'all' }, '-=.9')
+         .from('.home-hero-float', { y: 22, opacity: 0, duration: .6, clearProps: 'all' }, '-=.55');
+       gsap.to('.home-hero-media-frame img', { yPercent: 7, ease: 'none', scrollTrigger: { trigger: '.home-hero', start: 'top top', end: 'bottom top', scrub: true } });
+       gsap.to('.home-hero-glow-a', { yPercent: 26, ease: 'none', scrollTrigger: { trigger: '.home-hero', start: 'top top', end: 'bottom top', scrub: true } });
+       gsap.to('.home-hero-glow-b', { yPercent: -20, ease: 'none', scrollTrigger: { trigger: '.home-hero', start: 'top top', end: 'bottom top', scrub: true } });
        gsap.utils.toArray<HTMLElement>('.reveal').forEach(el => { gsap.from(el, { y: 30, opacity: 0, duration: .8, ease: 'power2.out', clearProps: 'all', scrollTrigger: { trigger: el, start: 'top 92%', once: true } }); });
        gsap.utils.toArray<HTMLElement>('.service-grid, .process-grid, .principles, .client-row').forEach(group => {
          gsap.from(group.children, { y: 34, opacity: 0, duration: .75, stagger: .1, ease: 'power3.out', clearProps: 'all', scrollTrigger: { trigger: group, start: 'top 90%', once: true } });
@@ -54,7 +64,7 @@ function Index() {
  }, []);
  return <div ref={root}>
   <main>
-    <section className="home-hero" id="top"><div className="container home-hero-grid"><div className="home-hero-text"><div className="home-hero-badge hero-enter"><span className="status-dot"/>Software development &amp; digital solutions</div><h1 className="hero-enter">Software built for <span>your business.</span></h1><p className="hero-enter">We bring design and engineering together to create web applications, mobile products, and enterprise software that move your business forward.</p><div className="home-hero-actions hero-enter"><Button variant="brand" size="lg" asChild><Link to="/work">Explore our work <ArrowUpRight/></Link></Button><Button variant="outline" size="lg" asChild><Link to="/contact">Let's talk</Link></Button></div><ul className="home-hero-points hero-enter">{['Web applications','Mobile products','Enterprise software'].map(t=><li key={t}><Check size={14}/>{t}</li>)}</ul></div><div className="home-hero-media hero-media"><img src={hero} width={1536} height={1024} alt="Modern digital product design workspace" fetchPriority="high"/></div></div></section>
+    <section className="home-hero" id="top"><div className="home-hero-bg" aria-hidden="true"><span className="home-hero-glow home-hero-glow-a"/><span className="home-hero-glow home-hero-glow-b"/><span className="home-hero-grid-lines"/></div><div className="container home-hero-grid"><div className="home-hero-text"><div className="home-hero-badge"><span className="status-dot"/>Software development &amp; digital solutions</div><h1>Software built for <span>your business.</span></h1><p>We bring design and engineering together to create web applications, mobile products, and enterprise software that move your business forward.</p><div className="home-hero-actions"><Button variant="brand" size="lg" asChild><Link to="/work">Explore our work <ArrowUpRight/></Link></Button><Button variant="outline" size="lg" asChild><Link to="/contact">Let's talk</Link></Button></div><ul className="home-hero-points">{['Web applications','Mobile products','Enterprise software'].map(t=><li key={t}><Check size={14}/>{t}</li>)}</ul></div><div className="home-hero-media"><span className="home-hero-media-glow" aria-hidden="true"/><div className="home-hero-media-frame"><img src={hero} width={1536} height={1024} alt="Modern digital product design workspace" fetchPriority="high"/></div><div className="home-hero-float"><span className="home-hero-float-icon"><Sparkles size={17}/></span><div><strong>Shipped &amp; live</strong><small>Digital products in production</small></div></div></div></div></section>
     <section className="clients" id="clients" aria-label="Our clients"><div className="container"><p className="clients-label">Working with businesses that move the world forward.</p><div className="client-row">{companies.map((c) => { const Icon = clientIcons[c.slug] ?? Landmark; return <Link key={c.slug} to="/work/$company" params={{ company: c.slug }} className="client-logo-card">{c.logoUrl ? <img src={c.logoUrl} alt={`${c.name} logo`} className="client-logo-img"/> : <span className="client-logo-slot" title="Logo space"><Icon/></span>}<span className="client-logo-name">{c.shortName}<small>{c.sector}</small></span></Link>; })}</div></div></section>
    <section className="section work" id="work"><div className="container"><div className="section-head reveal"><div><div className="eyebrow">01 / SELECTED WORK</div><h2>Our work speaks for itself.</h2></div><p>Different industries. Unique challenges.<br/>Thoughtfully crafted digital solutions.</p></div><CompanyGrid/></div></section>
    <section className="section services" id="services"><div className="container"><div className="section-head reveal"><div><div className="eyebrow">02 / WHAT WE DO</div><h2>Technology built around<br/>your business.</h2></div><p>From the first idea to the finished product,<br/>we bring design and engineering together.</p></div><div className="service-grid">{services.map(service => <Link className="service reveal" key={service.name} to="/services/$service" params={{service:serviceContent.find(item=>item.name===service.name)?.slug??'web-applications'}}><service.icon className="service-icon" size={28} strokeWidth={1.4}/><h3>{service.name}</h3><p>{service.copy}</p><span className="portfolio-link">Explore service <ArrowUpRight size={14}/></span></Link>)}</div></div></section>
