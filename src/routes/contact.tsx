@@ -1,9 +1,85 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { ContactForm } from '@/components/contact-form';
-import { pageHead } from '@/lib/page-head';
-import { PageMotion } from '@/components/page-motion';
-import { ArrowUpRight, MessageSquare, PencilRuler, Code2, Mail } from 'lucide-react';
-import { contact } from '@/content/contact';
-import { Button } from '@/components/ui/button';
-export const Route=createFileRoute('/contact')({head:()=>pageHead('Contact us','Start a conversation with iVantage about your web application, mobile product or enterprise software project.'),component:Contact});
-function Contact(){return <PageMotion><main><section className="contact-page"><div className="container"><div className="contact-heading"><div><div className="eyebrow page-enter"><span className="status-dot"/>CONTACT IVANTAGE</div><h1 className="page-enter">Let's talk about<br/><span>your next project.</span></h1></div><ArrowUpRight className="contact-heading-arrow page-enter" strokeWidth={1}/></div><div className="contact-page-grid"><aside className="contact-sidebar page-enter"><p className="contact-intro">Good work starts with<br/>a conversation.</p><p className="contact-copy">Tell us about your business, your goals, and the digital solution you have in mind.</p><div className="direct-contact"><span className="eyebrow">EMAIL US</span><Button variant="link" asChild className="company-email"><a href={contact.emailHref}><Mail size={19}/><span>{contact.email}</span><ArrowUpRight size={18}/></a></Button></div><div className="conversation-topics"><span><MessageSquare size={17}/>Business & goals</span><span><PencilRuler size={17}/>Design & experience</span><span><Code2 size={17}/>Development & delivery</span></div></aside><div className="contact-form-wrap page-enter"><div className="form-heading"><span>PROJECT INQUIRY</span><span>LET'S GET ACQUAINTED</span></div><ContactForm/></div></div></div></section></main></PageMotion>}
+import { createFileRoute } from "@tanstack/react-router";
+import { ContactForm } from "@/components/contact-form";
+import { EditorialHero } from "@/components/inner-page";
+import { pageHead } from "@/lib/page-head";
+import { PageMotion } from "@/components/page-motion";
+import { ArrowUpRight, Code2, Mail, MessageSquare, PencilRuler } from "lucide-react";
+import { contact } from "@/content/contact";
+import { SocialLinks } from "@/components/social-links";
+
+export const Route = createFileRoute("/contact")({
+  head: () =>
+    pageHead(
+      "Contact us",
+      "Start a conversation with iVantage about your web application, mobile product or enterprise software project.",
+    ),
+  component: Contact,
+});
+
+function Contact() {
+  return (
+    <PageMotion>
+      <main>
+        <EditorialHero
+          eyebrow="Contact iVantage"
+          title={
+            <>
+              <span className="mask-line">
+                <span>Let’s talk about</span>
+              </span>
+              <span className="mask-line">
+                <span>
+                  <em>your next project.</em>
+                </span>
+              </span>
+            </>
+          }
+          copy="Tell us about your business, your goals, and the digital solution you have in mind."
+          footRight="iVantage / Contact"
+        />
+
+        <section className="contact-page">
+          <div className="container">
+            <div className="contact-page-grid">
+              <aside className="contact-side reveal">
+                <h2>
+                  Good work starts
+                  <br />
+                  with <em>a conversation.</em>
+                </h2>
+                <a className="contact-email" href={contact.emailHref}>
+                  <Mail size={19} />
+                  {contact.email}
+                  <ArrowUpRight size={18} />
+                </a>
+                <div className="contact-topics">
+                  <span>
+                    <MessageSquare size={17} /> Business &amp; goals
+                  </span>
+                  <span>
+                    <PencilRuler size={17} /> Design &amp; experience
+                  </span>
+                  <span>
+                    <Code2 size={17} /> Development &amp; delivery
+                  </span>
+                </div>
+                <div className="contact-socials">
+                  <span className="contact-socials-label">Follow iVantage</span>
+                  <SocialLinks />
+                </div>
+              </aside>
+
+              <div className="form-card reveal">
+                <div className="form-heading">
+                  <span>Project inquiry</span>
+                  <span>Let’s get acquainted</span>
+                </div>
+                <ContactForm />
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </PageMotion>
+  );
+}

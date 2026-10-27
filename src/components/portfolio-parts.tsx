@@ -1,8 +1,139 @@
-import { Link } from '@tanstack/react-router';
-import { ArrowRight, ArrowUpRight, ImageIcon, Layers3 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { companies, type Company } from '@/content/portfolio';
-export function CompanyLogo({company,large=false}:{company:Company;large?:boolean}){return <div className={`company-logo ${large?'company-logo-large':''}`}>{company.logoUrl?<img src={company.logoUrl} alt={`${company.name} official logo`} width={180} height={64}/>:<><ImageIcon size={large?24:15} strokeWidth={1.3}/><span>{large?'Company logo':company.shortName}</span></>}</div>}
-export function CompanyGrid(){return <div className="work-grid">{companies.map((c,i)=><article className="project reveal" key={c.slug}><Link to="/work/$company" params={{company:c.slug}} className="company-project-link" aria-label={`View ${c.name} portfolio`}><div className="project-image"><img src={c.cover} width={2934} height={1680} loading="lazy" alt={c.coverAlt}/><span className="project-hover"><ArrowUpRight size={22}/></span></div><div className="project-info"><div><CompanyLogo company={c}/><h3>{c.name}</h3><p>{c.sector}</p></div><ArrowUpRight size={20}/></div><p className="project-description">{c.summary}</p><span className="portfolio-link">Explore company portfolio <ArrowRight size={14}/></span></Link></article>)}</div>}
-export function ConversationBand(){return <section className="conversation-band"><div className="container"><div><div className="eyebrow">YOUR NEXT CHAPTER</div><h2>Let's build something that matters.</h2></div><Button variant="brand" size="lg" asChild><Link to="/contact">Start a conversation <ArrowUpRight/></Link></Button></div></section>}
-export function ProductEmpty(){return <div className="products-empty"><Layers3 size={32} strokeWidth={1.2}/><h3>Product stories are coming soon.</h3><p>Published products, screenshots, and project details will appear here.</p></div>}
+import { Link } from "@tanstack/react-router";
+import { ArrowRight, ArrowUpRight, Layers3 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { companies, type Company } from "@/content/portfolio";
+
+export function BrowserFrame({
+  src,
+  alt,
+  eager = false,
+  caption,
+}: {
+  src: string;
+  alt: string;
+  eager?: boolean;
+  caption?: string;
+}) {
+  return (
+    <div className="frame">
+      <div className="frame-bar" aria-hidden="true">
+        <span className="frame-dot" />
+        <span className="frame-dot" />
+        <span className="frame-dot" />
+        <span className="frame-url" />
+      </div>
+      <div className="frame-body">
+        <img
+          src={src}
+          alt={alt}
+          loading={eager ? "eager" : "lazy"}
+          fetchPriority={eager ? "high" : "auto"}
+          decoding="async"
+        />
+      </div>
+      {caption && <span className="concept-label">{caption}</span>}
+    </div>
+  );
+}
+
+export function CompanyGrid() {
+  return (
+    <div className="work-grid reveal-stagger">
+      {companies.map((company, index) => (
+        <article className="project" key={company.slug}>
+          <Link
+            to="/work/$company"
+            params={{ company: company.slug }}
+            className="project-link"
+            aria-label={`View ${company.name} portfolio`}
+          >
+            <div className="project-image">
+              <img src={company.cover} alt={company.coverAlt} loading="lazy" decoding="async" />
+              <span className="project-arrow">
+                <ArrowUpRight size={19} />
+              </span>
+            </div>
+            <div className="project-info">
+              <div>
+                <h3>{company.name}</h3>
+                <p className="project-sector">
+                  <span>{company.sector}</span>
+                  <span aria-hidden="true" className="sector-dot">
+                    ·
+                  </span>
+                  <span>
+                    {String(company.products.length).padStart(2, "0")} product
+                    {company.products.length === 1 ? "" : "s"}
+                  </span>
+                </p>
+              </div>
+              <span className="project-index">0{index + 1}</span>
+            </div>
+          </Link>
+          <p className="project-description">{company.summary}</p>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+export function ConversationBand() {
+  return (
+    <section className="conversation-band">
+      <div className="container conversation-inner">
+        <div>
+          <div className="eyebrow">Your next chapter</div>
+          <h2>
+            Let’s build something
+            <br />
+            that <em>matters.</em>
+          </h2>
+        </div>
+        <Button asChild variant="brand" size="lg" className="btn-icon-slide">
+          <Link to="/contact">
+            Start a conversation <ArrowUpRight />
+          </Link>
+        </Button>
+      </div>
+    </section>
+  );
+}
+
+export function ProductEmpty() {
+  return (
+    <div className="products-empty">
+      <Layers3 size={30} strokeWidth={1.2} />
+      <h3>Product stories are coming soon.</h3>
+      <p>Published products, screenshots, and project details will appear here.</p>
+    </div>
+  );
+}
+
+export function NextCompany({ company }: { company: Company }) {
+  return (
+    <section className="next-company">
+      <div className="container">
+        <span className="eyebrow">Next company</span>
+        <Link to="/work/$company" params={{ company: company.slug }}>
+          <h2>{company.name}</h2>
+          <ArrowRight strokeWidth={1} />
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+export function CompanyLogoCard({ company }: { company: Company }) {
+  return (
+    <div className="company-logo-card">
+      {company.logoUrl ? (
+        <img src={company.logoUrl} alt={`${company.name} logo`} width={140} height={62} />
+      ) : (
+        <span className="company-logo-placeholder">
+          <Layers3 size={22} strokeWidth={1.3} />
+          {company.shortName}
+        </span>
+      )}
+    </div>
+  );
+}
