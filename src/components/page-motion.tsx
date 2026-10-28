@@ -41,8 +41,7 @@ export function PageMotion({ children }: { children: ReactNode }) {
           "-=0.6",
         )
         .from(".hero-meta li", { y: 12, opacity: 0, duration: 0.5, stagger: 0.06 }, "-=0.5")
-        .from(".hero-visual", { y: 34, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.95")
-        .from(".hero-chip", { y: 16, opacity: 0, duration: 0.6 }, "-=0.55");
+        .from(".hero-visual", { y: 34, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.95");
 
       // Scroll-linked depth: hero art drifts slower than the copy.
       gsap.utils.toArray<HTMLElement>(".hero-visual").forEach((el) => {
@@ -50,13 +49,6 @@ export function PageMotion({ children }: { children: ReactNode }) {
           yPercent: 7,
           ease: "none",
           scrollTrigger: { trigger: el, start: "top 70%", end: "bottom top", scrub: 0.6 },
-        });
-      });
-      gsap.utils.toArray<HTMLElement>(".hero-chip").forEach((el) => {
-        gsap.to(el, {
-          yPercent: -22,
-          ease: "none",
-          scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.8 },
         });
       });
 

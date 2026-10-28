@@ -1,23 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  ArrowUpRight,
-  Check,
-  Code2,
-  Mail,
-  MessageSquare,
-  PencilRuler,
-  Sparkles,
-} from "lucide-react";
+import { ArrowUpRight, Check, Code2, Mail, MessageSquare, PencilRuler } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/contact-form";
-import { BrowserFrame, CompanyGrid } from "@/components/portfolio-parts";
+import { CompanyGrid } from "@/components/portfolio-parts";
+import { HeroOrbit } from "@/components/hero-orbit";
 import { PageMotion } from "@/components/page-motion";
 import { ProcessSection } from "@/components/inner-page";
 import { services } from "@/content/services";
 import { companies } from "@/content/portfolio";
 import { contact } from "@/content/contact";
-import homecoCover from "@/assets/work/homeco-landing-page.webp";
-import imperialLms from "@/assets/work/imperial-lms.webp";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -127,26 +118,7 @@ function Index() {
             </div>
 
             <div className="hero-visual">
-              <span className="hero-visual-glow" aria-hidden="true" />
-              <div className="hero-frame-main">
-                <BrowserFrame
-                  src={homecoCover}
-                  alt="HomeCo development landing page built by iVantage"
-                  eager
-                />
-              </div>
-              <div className="hero-frame-small">
-                <BrowserFrame src={imperialLms} alt="Imperial Homes loan management system" eager />
-              </div>
-              <div className="hero-chip">
-                <span className="hero-chip-icon">
-                  <Sparkles size={16} />
-                </span>
-                <span>
-                  <strong>Shipped &amp; live</strong>
-                  <small>Digital products in production</small>
-                </span>
-              </div>
+              <HeroOrbit />
             </div>
           </div>
         </section>

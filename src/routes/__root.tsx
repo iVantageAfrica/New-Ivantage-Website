@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -80,10 +81,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "iVantage — Digital Product Engineering" },
-      { name: "description", content: "Thoughtful software and digital experiences for businesses and institutions." },
+      {
+        name: "description",
+        content: "Thoughtful software and digital experiences for businesses and institutions.",
+      },
       { name: "author", content: "iVantage" },
       { property: "og:title", content: "iVantage — Digital Product Engineering" },
-      { property: "og:description", content: "Thoughtful software and digital experiences for businesses and institutions." },
+      {
+        property: "og:description",
+        content: "Thoughtful software and digital experiences for businesses and institutions.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -115,6 +122,34 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function ScrollToTop() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const hash = useRouterState({ select: (state) => state.location.hash });
+
+  useEffect(() => {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  }, []);
+
+  useEffect(() => {
+    if (hash) return;
+    const html = document.documentElement;
+    html.classList.add("scroll-jump");
+    window.scrollTo(0, 0);
+    const frame = requestAnimationFrame(() => window.scrollTo(0, 0));
+    const timer = window.setTimeout(() => {
+      window.scrollTo(0, 0);
+      html.classList.remove("scroll-jump");
+    }, 120);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(timer);
+      html.classList.remove("scroll-jump");
+    };
+  }, [pathname, hash]);
+
+  return null;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
@@ -124,6 +159,7 @@ function RootComponent() {
       <SiteHeader />
       <Outlet />
       <SiteFooter />
+      <ScrollToTop />
     </QueryClientProvider>
   );
 }

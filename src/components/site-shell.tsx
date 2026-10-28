@@ -198,7 +198,14 @@ export function SiteFooter() {
         </div>
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} iVantage. All rights reserved.</span>
-          <a href="#top" className="to-top">
+          <a
+            href="#top"
+            className="to-top"
+            onClick={(event) => {
+              event.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
             Back to top <ArrowUp size={13} />
           </a>
         </div>

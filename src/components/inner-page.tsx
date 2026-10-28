@@ -10,16 +10,61 @@ function HeroMotif() {
       <circle cx="380" cy="330" r="216" stroke="currentColor" strokeWidth="1" opacity="0.45" />
       <circle cx="380" cy="330" r="320" stroke="currentColor" strokeWidth="1" opacity="0.26" />
       <path d="M380 0v660M40 330h680" stroke="currentColor" strokeWidth="1" opacity="0.3" />
-      <path
-        d="M172 148 588 512"
+
+      <g className="motif-sweep">
+        <circle
+          cx="380"
+          cy="330"
+          r="216"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeDasharray="150 1207"
+          strokeLinecap="round"
+        />
+      </g>
+
+      <g className="motif-sweep--outer">
+        <circle
+          cx="380"
+          cy="330"
+          r="320"
+          stroke="currentColor"
+          strokeWidth="1.4"
+          strokeDasharray="74 1937"
+          strokeLinecap="round"
+          opacity="0.6"
+        />
+      </g>
+
+      <g className="motif-diagonal">
+        <path
+          d="M172 148 588 512"
+          stroke="currentColor"
+          strokeWidth="1"
+          opacity="0.22"
+          strokeDasharray="3 7"
+        />
+      </g>
+
+      <g className="motif-node motif-node--a">
+        <circle cx="380" cy="114" r="8" stroke="currentColor" strokeWidth="1" opacity="0.35" />
+        <circle cx="380" cy="114" r="3.4" fill="currentColor" />
+      </g>
+
+      <g className="motif-node motif-node--b">
+        <circle cx="542" cy="492" r="2.8" fill="currentColor" opacity="0.85" />
+      </g>
+
+      <circle
+        className="motif-ping"
+        cx="380"
+        cy="330"
+        r="44"
         stroke="currentColor"
         strokeWidth="1"
-        opacity="0.22"
-        strokeDasharray="3 7"
+        opacity="0.35"
       />
       <circle cx="380" cy="330" r="5" fill="currentColor" opacity="0.9" />
-      <circle cx="272" cy="222" r="3" fill="currentColor" opacity="0.8" />
-      <circle cx="488" cy="438" r="3" fill="currentColor" opacity="0.8" />
     </svg>
   );
 }
