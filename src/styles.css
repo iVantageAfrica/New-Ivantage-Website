@@ -1096,6 +1096,11 @@ a:hover .frame-body img,
   max-height: clamp(32px, 3.9vw, 54px);
 }
 
+.client-logo--stacked img {
+  max-height: clamp(44px, 4.6vw, 58px);
+  max-width: 92px;
+}
+
 .client-logo::after {
   content: "";
   position: absolute;
@@ -1918,7 +1923,8 @@ a:hover .frame-body img,
 }
 
 .footer-links a,
-.footer-links p {
+.footer-links p,
+.footer-links span {
   font-size: 12.5px;
   line-height: 1.5;
   color: var(--ink-soft);
@@ -2298,10 +2304,28 @@ a:hover .frame-body img,
 
 .product-copy ul {
   margin: 16px 0 0;
-  padding-left: 18px;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
   font-size: 14px;
   line-height: 1.7;
   color: var(--ink-muted);
+}
+
+.product-copy li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.product-copy li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 7px;
+  height: 1px;
+  background: var(--teal);
 }
 
 .product-copy a {
@@ -2891,8 +2915,7 @@ a:hover .frame-body img,
 
   .product-feature .frame {
     order: 2;
-  }
-}
+  }}
 
 @media (max-width: 700px) {
   :root {
@@ -3118,7 +3141,6 @@ a:hover .frame-body img,
   .hero-title {
     font-size: 1.75rem;
   }
-
   .next-company h2 {
     font-size: 1.6rem;
   }

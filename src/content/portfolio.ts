@@ -1,14 +1,75 @@
 import imperialLogo from "@/assets/clients/imperial-homes-logo.webp";
+import homebaseLogo from "@/assets/clients/homebase-logo.png";
 import homecoLogo from "@/assets/clients/homeco-logo.png";
+import zylusLogo from "@/assets/clients/zylus-logo.png";
 import buildconnectLogo from "@/assets/clients/buildconnect-logo.png";
 import nrcLogo from "@/assets/clients/nrc-logo.png";
 import imperialAccountOpening from "@/assets/work/imperial-account-opening.webp";
+import imperialPlus from "@/assets/work/imperial-plus-app.webp";
 import imperialLms from "@/assets/work/imperial-lms.webp";
 import homecoLanding from "@/assets/work/homeco-landing-page.webp";
 import buildconnectLanding from "@/assets/work/buildconnect-landing-page.webp";
 import nrcProperty from "@/assets/work/nrc-property-management.webp";
 
 export type Screenshot = { url: string; alt: string };
+
+// Businesses iVantage works with, shown in the home logo strip. Entries with a
+// companySlug link to a portfolio page; the rest are relationship logos only.
+export type Client = {
+  name: string;
+  shortName: string;
+  sector: string;
+  logoUrl: string;
+  companySlug?: string;
+  variant?: "mark" | "stacked";
+};
+
+export const clients: Client[] = [
+  {
+    name: "Imperial Homes Mortgage Bank",
+    shortName: "Imperial Homes",
+    sector: "Banking & mortgage",
+    logoUrl: imperialLogo,
+    companySlug: "imperial-homes",
+    variant: "mark",
+  },
+  {
+    name: "Homebase Mortgage Bank",
+    shortName: "Homebase",
+    sector: "Mortgage banking",
+    logoUrl: homebaseLogo,
+    variant: "mark",
+  },
+  {
+    name: "HomeCo Development",
+    shortName: "HomeCo",
+    sector: "Real estate",
+    logoUrl: homecoLogo,
+    companySlug: "homeco",
+  },
+  {
+    name: "Zylus Homes & Property",
+    shortName: "Zylus",
+    sector: "Homes & property",
+    logoUrl: zylusLogo,
+    variant: "stacked",
+  },
+  {
+    name: "BuildConnect",
+    shortName: "BuildConnect",
+    sector: "Construction technology",
+    logoUrl: buildconnectLogo,
+    companySlug: "buildconnect",
+  },
+  {
+    name: "Nigerian Railway Corporation",
+    shortName: "Nigerian Railway",
+    sector: "Transportation",
+    logoUrl: nrcLogo,
+    companySlug: "nigerian-railway",
+    variant: "mark",
+  },
+];
 export type Product = {
   slug: string;
   name: string;
@@ -26,6 +87,7 @@ export type Company = {
   summary: string;
   cover: string;
   coverAlt: string;
+  card?: Screenshot;
   theme: string;
   logoUrl?: string;
   logoKind?: "mark" | "wordmark";
@@ -44,10 +106,26 @@ export const companies: Company[] = [
     summary: "Digital solutions for the mortgage and banking sector.",
     cover: imperialAccountOpening,
     coverAlt: "Imperial Homes account opening interface",
+    card: { url: imperialPlus, alt: "Imperial+ mobile app property listings and login screens" },
     theme: "banking",
     logoUrl: imperialLogo,
     logoKind: "mark",
     products: [
+      {
+        slug: "imperial-plus",
+        name: "Imperial+ Mobile App",
+        category: "Mobile banking",
+        summary:
+          "An Android app that puts Imperial Homes Mortgage Bank in customers' hands — browse verified homes, request to buy, and manage accounts, savings, investments and equity contributions in one place.",
+        screenshots: [
+          { url: imperialPlus, alt: "Imperial+ mobile app property listings and login screens" },
+        ],
+        features: [
+          "Verified off-plan and completed property listings",
+          "Account, savings and investment balances in one view",
+          "Secure sign-in with phone, email or account number",
+        ],
+      },
       {
         slug: "account-opening",
         name: "Account Opening",

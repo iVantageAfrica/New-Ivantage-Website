@@ -43,7 +43,7 @@ export function ContactForm() {
           <Check size={24} />
         </span>
         <h3>Your conversation starts here.</h3>
-        <p>Your inquiry has been saved for the iVantage team. We’ll be in touch shortly.</p>
+        <p>Your inquiry is on its way to the iVantage team. We’ll be in touch shortly.</p>
         <Button variant="outline" onClick={() => setSaved(false)}>
           Send another inquiry <ArrowUpRight />
         </Button>
@@ -119,7 +119,7 @@ export function ContactForm() {
       <Button variant="brand" size="lg" disabled={pending} type="submit" className="form-submit">
         {pending ? (
           <>
-            Saving your inquiry <Loader2 className="animate-spin" />
+            Sending your inquiry <Loader2 className="animate-spin" />
           </>
         ) : (
           <>

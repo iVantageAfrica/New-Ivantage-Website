@@ -13,6 +13,6 @@
 - [ ] Verify desktop/mobile visuals, page navigation, and form preservation.
 
 ## Professional company website refinement
-- [ ] Add the verified company email info@ivantage.africa.com to Contact and the footer.
+- [x] Publish the verified company email support@ivantage.africa in Contact and the footer, and deliver form inquiries to it (Supabase storage plus the PHP/PHPMailer endpoint in `./mailer`).
 - [ ] Replace unsuitable decorative imagery and polish the website with restrained animation.
 - [ ] Verify page navigation, contact links, and layouts.

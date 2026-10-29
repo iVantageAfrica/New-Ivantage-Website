@@ -7,7 +7,7 @@ import { HeroOrbit } from "@/components/hero-orbit";
 import { PageMotion } from "@/components/page-motion";
 import { ProcessSection } from "@/components/inner-page";
 import { services } from "@/content/services";
-import { companies } from "@/content/portfolio";
+import { clients } from "@/content/portfolio";
 import { contact } from "@/content/contact";
 
 export const Route = createFileRoute("/")({
@@ -41,18 +41,37 @@ const principles = [
 ];
 
 function Clients() {
-  const items = companies.map((company) => (
-    <Link
-      key={company.slug}
-      to="/work/$company"
-      params={{ company: company.slug }}
-      className={`client-logo${company.logoKind === "mark" ? " client-logo--mark" : ""}`}
-      aria-label={`${company.name} — ${company.sector}`}
-      title={company.name}
-    >
-      {company.logoUrl && <img src={company.logoUrl} alt="" loading="lazy" decoding="async" />}
-    </Link>
-  ));
+  const items = clients.map((client) => {
+    const className = `client-logo${client.variant ? ` client-logo--${client.variant}` : ""}`;
+    const logo = <img src={client.logoUrl} alt="" loading="lazy" decoding="async" />;
+
+    if (client.companySlug) {
+      return (
+        <Link
+          key={client.name}
+          to="/work/$company"
+          params={{ company: client.companySlug }}
+          className={className}
+          aria-label={`${client.name} — ${client.sector}`}
+          title={client.name}
+        >
+          {logo}
+        </Link>
+      );
+    }
+
+    return (
+      <span
+        key={client.name}
+        className={className}
+        role="img"
+        aria-label={`${client.name} logo`}
+        title={client.name}
+      >
+        {logo}
+      </span>
+    );
+  });
 
   return (
     <section className="clients" aria-label="Selected clients">

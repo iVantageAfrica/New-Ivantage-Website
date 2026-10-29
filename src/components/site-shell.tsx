@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Brand, BrandLogo } from "@/components/brand";
 import { SocialLinks } from "@/components/social-links";
 import { services } from "@/content/services";
-import { companies } from "@/content/portfolio";
+import { clients } from "@/content/portfolio";
 import { contact } from "@/content/contact";
 
 const nav = [
@@ -171,11 +171,19 @@ export function SiteFooter() {
             </div>
             <div>
               <h3>Clients</h3>
-              {companies.map((company) => (
-                <Link key={company.slug} to="/work/$company" params={{ company: company.slug }}>
-                  {company.shortName}
-                </Link>
-              ))}
+              {clients.map((client) =>
+                client.companySlug ? (
+                  <Link
+                    key={client.name}
+                    to="/work/$company"
+                    params={{ company: client.companySlug }}
+                  >
+                    {client.shortName}
+                  </Link>
+                ) : (
+                  <span key={client.name}>{client.shortName}</span>
+                ),
+              )}
             </div>
             <div>
               <h3>Expertise</h3>

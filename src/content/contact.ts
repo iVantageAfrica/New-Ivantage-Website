@@ -1,6 +1,6 @@
 export const contact = {
-  email: "info@ivantage.africa",
-  emailHref: "mailto:info@ivantage.africa",
+  email: "support@ivantage.africa",
+  emailHref: "mailto:support@ivantage.africa",
   socials: [
     {
       id: "linkedin",

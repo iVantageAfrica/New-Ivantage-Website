@@ -20,6 +20,10 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# PHP mailer credentials and dependencies
+mailer/config.php
+mailer/vendor/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

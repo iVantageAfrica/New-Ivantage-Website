@@ -39,40 +39,44 @@ export function BrowserFrame({
 export function CompanyGrid() {
   return (
     <div className="work-grid reveal-stagger">
-      {companies.map((company, index) => (
-        <article className="project" key={company.slug}>
-          <Link
-            to="/work/$company"
-            params={{ company: company.slug }}
-            className="project-link"
-            aria-label={`View ${company.name} portfolio`}
-          >
-            <div className="project-image">
-              <img src={company.cover} alt={company.coverAlt} loading="lazy" decoding="async" />
-              <span className="project-arrow">
-                <ArrowUpRight size={19} />
-              </span>
-            </div>
-            <div className="project-info">
-              <div>
-                <h3>{company.name}</h3>
-                <p className="project-sector">
-                  <span>{company.sector}</span>
-                  <span aria-hidden="true" className="sector-dot">
-                    ·
-                  </span>
-                  <span>
-                    {String(company.products.length).padStart(2, "0")} product
-                    {company.products.length === 1 ? "" : "s"}
-                  </span>
-                </p>
+      {companies.map((company, index) => {
+        const image = company.card ?? { url: company.cover, alt: company.coverAlt };
+
+        return (
+          <article className="project" key={company.slug}>
+            <Link
+              to="/work/$company"
+              params={{ company: company.slug }}
+              className="project-link"
+              aria-label={`View ${company.name} portfolio`}
+            >
+              <div className="project-image">
+                <img src={image.url} alt={image.alt} loading="lazy" decoding="async" />
+                <span className="project-arrow">
+                  <ArrowUpRight size={19} />
+                </span>
               </div>
-              <span className="project-index">0{index + 1}</span>
-            </div>
-          </Link>
-          <p className="project-description">{company.summary}</p>
-        </article>
-      ))}
+              <div className="project-info">
+                <div>
+                  <h3>{company.name}</h3>
+                  <p className="project-sector">
+                    <span>{company.sector}</span>
+                    <span aria-hidden="true" className="sector-dot">
+                      ·
+                    </span>
+                    <span>
+                      {String(company.products.length).padStart(2, "0")} product
+                      {company.products.length === 1 ? "" : "s"}
+                    </span>
+                  </p>
+                </div>
+                <span className="project-index">0{index + 1}</span>
+              </div>
+            </Link>
+            <p className="project-description">{company.summary}</p>
+          </article>
+        );
+      })}
     </div>
   );
 }
