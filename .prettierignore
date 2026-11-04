@@ -1,8 +1,4 @@
 node_modules
 dist
-.output
-.vinxi
-pnpm-lock.yaml
+mailer/vendor
 package-lock.json
-bun.lock
-routeTree.gen.ts
