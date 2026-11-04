@@ -1,4 +1,4 @@
-import { Link, useLocation } from "@tanstack/react-router";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowUp, ArrowUpRight, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,9 +20,9 @@ export function SiteHeader() {
   const [menu, setMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const progress = useRef<HTMLSpanElement>(null);
-  const path = useLocation({ select: (l) => l.pathname });
+  const { pathname } = useLocation();
 
-  useEffect(() => setMenu(false), [path]);
+  useEffect(() => setMenu(false), [pathname]);
 
   useEffect(() => {
     let frame = 0;
@@ -70,7 +70,7 @@ export function SiteHeader() {
                 key={item.to}
                 to={item.to}
                 className="nav-link"
-                aria-current={isActive(path, item.to) ? "page" : undefined}
+                aria-current={isActive(pathname, item.to) ? "page" : undefined}
               >
                 {item.label}
               </Link>
@@ -124,7 +124,7 @@ export function SiteHeader() {
               to={item.to}
               className="menu-link"
               style={{ "--i": index } as CSSProperties}
-              aria-current={isActive(path, item.to) ? "page" : undefined}
+              aria-current={isActive(pathname, item.to) ? "page" : undefined}
               onClick={() => setMenu(false)}
             >
               <span>{item.label}</span>
@@ -173,11 +173,7 @@ export function SiteFooter() {
               <h3>Clients</h3>
               {clients.map((client) =>
                 client.companySlug ? (
-                  <Link
-                    key={client.name}
-                    to="/work/$company"
-                    params={{ company: client.companySlug }}
-                  >
+                  <Link key={client.name} to={`/work/${client.companySlug}`}>
                     {client.shortName}
                   </Link>
                 ) : (
@@ -188,7 +184,7 @@ export function SiteFooter() {
             <div>
               <h3>Expertise</h3>
               {services.map((service) => (
-                <Link key={service.slug} to="/services/$service" params={{ service: service.slug }}>
+                <Link key={service.slug} to={`/services/${service.slug}`}>
                   {service.shortName}
                 </Link>
               ))}

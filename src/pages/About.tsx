@@ -1,18 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ConversationBand } from "@/components/portfolio-parts";
-import { pageHead } from "@/lib/page-head";
-import { PageMotion } from "@/components/page-motion";
-import { EditorialHero, ProcessSection, TalkAction } from "@/components/inner-page";
 import { ArrowUpRight } from "lucide-react";
-
-export const Route = createFileRoute("/about")({
-  head: () =>
-    pageHead(
-      "About us",
-      "Meet iVantage: thoughtful software development, user-centred design and maintainable engineering.",
-    ),
-  component: About,
-});
+import { ConversationBand } from "@/components/portfolio-parts";
+import { EditorialHero, ProcessSection, TalkAction } from "@/components/inner-page";
+import { PageMotion } from "@/components/page-motion";
+import { usePageMeta, pageTitle } from "@/lib/seo";
 
 const values = [
   { name: "Business-focused solutions", copy: "Start with the purpose, not the technology." },
@@ -25,7 +15,12 @@ const values = [
   { name: "Continuous improvement", copy: "Keep learning, refining, and moving forward." },
 ];
 
-function About() {
+export function About() {
+  usePageMeta(
+    pageTitle("About us"),
+    "Meet iVantage: thoughtful software development, user-centred design and maintainable engineering.",
+  );
+
   return (
     <PageMotion>
       <main>

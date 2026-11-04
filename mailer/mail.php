@@ -5,15 +5,19 @@ declare(strict_types=1);
 /**
  * iVantage inquiry mailer.
  *
- * Accepts validated inquiry JSON from the site's server function and delivers
- * it to the company inbox over SMTP with PHPMailer.
+ * Accepts validated inquiry JSON posted by the website's contact form and
+ * delivers it to the company inbox over SMTP with PHPMailer.
  *
  * Deployment:
  *   1. copy this folder to your PHP host (a folder outside the web root is best)
  *   2. cp config.example.php config.php and fill in the SMTP details
  *   3. composer install   (or drop a PHPMailer release into ./PHPMailer)
- *   4. set INQUIRY_MAIL_ENDPOINT to https://your-host/mailer/mail.php and
- *      INQUIRY_MAIL_SECRET to the same value as config.php's secret
+ *   4. list the site's origins in config.php's allowed_origins, and point the
+ *      site's VITE_INQUIRY_MAIL_ENDPOINT at this script's URL
+ *
+ * The form is submitted by the browser, so nothing secret can live in the site.
+ * Abuse is limited by the origin allowlist, the per-IP rate limit, the
+ * honeypot field and the server-side re-validation below.
  */
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -28,12 +32,58 @@ const PROJECT_TYPES = [
     'Other',
 ];
 
+/**
+ * The site's origin, remembered once it passes the allowlist so every later
+ * response carries the header the browser needs to read it.
+ */
+function cors_origin(?string $origin = null): string
+{
+    static $matched = '';
+    if ($origin !== null) {
+        $matched = $origin;
+    }
+
+    return $matched;
+}
+
+/** Let an accepted origin read the response; the header is what unblocks the browser. */
+function allow_cors(): void
+{
+    $origin = cors_origin();
+    if ($origin === '') {
+        return;
+    }
+    header('Access-Control-Allow-Origin: ' . $origin);
+    header('Vary: Origin');
+}
+
 /** @param array<string, mixed> $payload */
 function respond(int $status, array $payload): never
 {
     http_response_code($status);
+    allow_cors();
     echo json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     exit;
+}
+
+/**
+ * The browser sends Origin on every POST, same-origin included. A request with
+ * no Origin is not a form submission, so it is rejected rather than trusted.
+ */
+function request_origin(): string
+{
+    $origin = (string) ($_SERVER['HTTP_ORIGIN'] ?? '');
+    if ($origin === '' && !empty($_SERVER['HTTP_REFERER'])) {
+        $parts = parse_url((string) $_SERVER['HTTP_REFERER']);
+        if (is_array($parts) && isset($parts['scheme'], $parts['host'])) {
+            $origin = $parts['scheme'] . '://' . $parts['host'];
+            if (isset($parts['port'])) {
+                $origin .= ':' . $parts['port'];
+            }
+        }
+    }
+
+    return rtrim($origin, '/');
 }
 
 /** @param array<string, mixed> $payload */
@@ -62,15 +112,42 @@ if (!is_file($configFile)) {
 /** @var array<string, mixed> $config */
 $config = require $configFile;
 
-if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
-    header('Allow: POST');
-    respond(405, ['ok' => false, 'error' => 'Method not allowed.']);
+$allowed = [];
+foreach (is_array($config['allowed_origins'] ?? null) ? $config['allowed_origins'] : [] as $entry) {
+    if (is_string($entry) && $entry !== '') {
+        $allowed[] = rtrim($entry, '/');
+    }
+}
+if ($allowed === []) {
+    error_log('[ivantage-mail] allowed_origins is empty');
+    respond(500, ['ok' => false, 'error' => 'Mailer is not configured.']);
 }
 
-$secret = (string) ($config['secret'] ?? '');
-$provided = (string) ($_SERVER['HTTP_X_INQUIRY_SECRET'] ?? '');
-if ($secret === '' || $provided === '' || !hash_equals($secret, $provided)) {
-    respond(401, ['ok' => false, 'error' => 'Unauthorized.']);
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+$origin = request_origin();
+
+if (!in_array($origin, $allowed, true)) {
+    if ($method === 'OPTIONS') {
+        // No allow headers, so the browser blocks the follow-up POST.
+        http_response_code(204);
+        exit;
+    }
+    respond(403, ['ok' => false, 'error' => 'Origin not allowed.']);
+}
+cors_origin($origin);
+
+if ($method === 'OPTIONS') {
+    allow_cors();
+    header('Access-Control-Allow-Methods: POST, OPTIONS');
+    header('Access-Control-Allow-Headers: Content-Type');
+    header('Access-Control-Max-Age: 600');
+    http_response_code(204);
+    exit;
+}
+
+if ($method !== 'POST') {
+    header('Allow: POST, OPTIONS');
+    respond(405, ['ok' => false, 'error' => 'Method not allowed.']);
 }
 
 // The endpoint is public, so throttle per caller before doing any work.

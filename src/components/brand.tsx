@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import logo from "@/assets/brand/ivantage-logo.png";
 
 export function BrandLogo({ width = 124 }: { width?: number }) {

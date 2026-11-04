@@ -1,5 +1,6 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
-import { findCompany, companies } from "@/content/portfolio";
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   BrowserFrame,
   CompanyLogoCard,
@@ -7,27 +8,22 @@ import {
   NextCompany,
   ProductEmpty,
 } from "@/components/portfolio-parts";
-import { pageHead } from "@/lib/page-head";
 import { PageMotion } from "@/components/page-motion";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { companies, findCompany } from "@/content/portfolio";
+import { usePageMeta, pageTitle } from "@/lib/seo";
+import { NotFound } from "./NotFound";
 
-export const Route = createFileRoute("/work/$company")({
-  loader: ({ params }) => {
-    const company = findCompany(params.company);
-    if (!company) throw notFound();
-    return company;
-  },
-  head: ({ loaderData }) =>
-    pageHead(
-      loaderData?.name ?? "Portfolio unavailable",
-      loaderData?.summary ?? "Company portfolio unavailable.",
-    ),
-  component: CompanyPage,
-});
+export function CompanyPortfolio() {
+  const { company: slug } = useParams<{ company: string }>();
+  const company = slug ? findCompany(slug) : undefined;
 
-function CompanyPage() {
-  const company = Route.useLoaderData();
+  usePageMeta(
+    pageTitle(company?.name ?? "Portfolio unavailable"),
+    company?.summary ?? "Company portfolio unavailable.",
+  );
+
+  if (!company) return <NotFound />;
+
   const index = companies.findIndex((item) => item.slug === company.slug);
   const next = companies[(index + 1) % companies.length];
 

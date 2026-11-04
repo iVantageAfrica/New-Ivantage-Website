@@ -1,21 +1,17 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { services } from "@/content/services";
-import { ConversationBand } from "@/components/portfolio-parts";
-import { pageHead } from "@/lib/page-head";
-import { PageMotion } from "@/components/page-motion";
-import { EditorialHero, ProcessSection, TalkAction } from "@/components/inner-page";
+import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
+import { ConversationBand } from "@/components/portfolio-parts";
+import { EditorialHero, ProcessSection, TalkAction } from "@/components/inner-page";
+import { PageMotion } from "@/components/page-motion";
+import { services } from "@/content/services";
+import { usePageMeta, pageTitle } from "@/lib/seo";
 
-export const Route = createFileRoute("/services/")({
-  head: () =>
-    pageHead(
-      "Services",
-      "Web applications, mobile applications, enterprise software and digital product design from iVantage.",
-    ),
-  component: Services,
-});
+export function Services() {
+  usePageMeta(
+    pageTitle("Services"),
+    "Web applications, mobile applications, enterprise software and digital product design from iVantage.",
+  );
 
-function Services() {
   return (
     <PageMotion>
       <main>
@@ -53,12 +49,7 @@ function Services() {
             </div>
             <div className="expertise-list reveal-stagger">
               {services.map((service, index) => (
-                <Link
-                  className="expertise-row"
-                  key={service.slug}
-                  to="/services/$service"
-                  params={{ service: service.slug }}
-                >
+                <Link className="expertise-row" key={service.slug} to={`/services/${service.slug}`}>
                   <span className="expertise-number">0{index + 1}</span>
                   <div className="expertise-name">
                     <service.icon strokeWidth={1.3} />

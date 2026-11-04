@@ -1,22 +1,17 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { ArrowUpRight, Code2, Mail, MessageSquare, PencilRuler } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
 import { EditorialHero } from "@/components/inner-page";
-import { pageHead } from "@/lib/page-head";
 import { PageMotion } from "@/components/page-motion";
-import { ArrowUpRight, Code2, Mail, MessageSquare, PencilRuler } from "lucide-react";
-import { contact } from "@/content/contact";
 import { SocialLinks } from "@/components/social-links";
+import { contact } from "@/content/contact";
+import { usePageMeta, pageTitle } from "@/lib/seo";
 
-export const Route = createFileRoute("/contact")({
-  head: () =>
-    pageHead(
-      "Contact us",
-      "Start a conversation with iVantage about your web application, mobile product or enterprise software project.",
-    ),
-  component: Contact,
-});
+export function Contact() {
+  usePageMeta(
+    pageTitle("Contact us"),
+    "Start a conversation with iVantage about your web application, mobile product or enterprise software project.",
+  );
 
-function Contact() {
   return (
     <PageMotion>
       <main>

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { ArrowUpRight, Check, Code2, Mail, MessageSquare, PencilRuler } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/contact-form";
@@ -9,28 +9,7 @@ import { ProcessSection } from "@/components/inner-page";
 import { services } from "@/content/services";
 import { clients } from "@/content/portfolio";
 import { contact } from "@/content/contact";
-
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "iVantage — Thoughtful Technology. Real Impact." },
-      {
-        name: "description",
-        content:
-          "iVantage designs and develops web applications, mobile products and enterprise software for businesses and institutions. Explore our work and start a conversation.",
-      },
-      { property: "og:title", content: "iVantage — Thoughtful Technology. Real Impact." },
-      {
-        property: "og:description",
-        content:
-          "Digital product engineering built around your business. Discover iVantage’s work, services and approach.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
-  component: Index,
-});
+import { usePageMeta } from "@/lib/seo";
 
 const principles = [
   "Business-focused solutions",
@@ -49,8 +28,7 @@ function Clients() {
       return (
         <Link
           key={client.name}
-          to="/work/$company"
-          params={{ company: client.companySlug }}
+          to={`/work/${client.companySlug}`}
           className={className}
           aria-label={`${client.name} — ${client.sector}`}
           title={client.name}
@@ -88,7 +66,12 @@ function Clients() {
   );
 }
 
-function Index() {
+export function Home() {
+  usePageMeta(
+    "iVantage — Thoughtful Technology. Real Impact.",
+    "iVantage designs and develops web applications, mobile products and enterprise software for businesses and institutions. Explore our work and start a conversation.",
+  );
+
   return (
     <PageMotion>
       <main id="top">
@@ -183,12 +166,7 @@ function Index() {
             </div>
             <div className="service-list reveal-stagger">
               {services.map((service, index) => (
-                <Link
-                  className="service"
-                  key={service.slug}
-                  to="/services/$service"
-                  params={{ service: service.slug }}
-                >
+                <Link className="service" key={service.slug} to={`/services/${service.slug}`}>
                   <span className="service-number">0{index + 1}</span>
                   <div className="service-name">
                     <service.icon strokeWidth={1.3} />

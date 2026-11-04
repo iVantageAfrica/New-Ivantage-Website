@@ -1,17 +1,32 @@
-import { QueryClient } from "@tanstack/react-query";
-import { createRouter, rootRouteId } from "@tanstack/react-router";
+import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 
-import { routeTree } from "@/routeTree.gen";
+import { App } from "@/App";
 
-// Match routes without running loaders or rendering: loaders may need a server or
-// network the test run lacks, and jsdom never loads the stylesheets React waits on.
+const pages = [
+  { path: "/", heading: /Software built for/ },
+  { path: "/work", heading: /Different businesses/ },
+  { path: "/work/imperial-homes", heading: /Imperial Homes Mortgage Bank/ },
+  { path: "/services", heading: /Design\. Develop/ },
+  { path: "/services/web-applications", heading: /Web Application Development/ },
+  { path: "/about", heading: /We are iVantage/ },
+  { path: "/contact", heading: /Let’s talk about/ },
+  { path: "/work/not-a-client", heading: /^404$/ },
+  { path: "/nowhere", heading: /^404$/ },
+];
+
+// Rendering is enough to prove the route table resolves; nothing here needs a
+// server, so the SPA can be verified with no network.
 describe("App routing", () => {
-  it("matches a page for / instead of falling back to not found", () => {
-    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+  it.each(pages)("renders $path", ({ path, heading }) => {
+    const { unmount } = render(
+      <MemoryRouter initialEntries={[path]}>
+        <App />
+      </MemoryRouter>,
+    );
 
-    const matches = router.matchRoutes("/");
-
-    expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
+    expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
+    unmount();
   });
 });

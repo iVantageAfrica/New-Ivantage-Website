@@ -1,12 +1,10 @@
 import { useState, type FormEvent } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import { AlertCircle, ArrowUpRight, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { inquirySchema, projectTypes } from "@/lib/inquiry-schema";
-import { submitInquiry } from "@/lib/inquiry.functions";
+import { submitInquiry } from "@/lib/inquiry";
 
 export function ContactForm() {
-  const submit = useServerFn(submitInquiry);
   const [pending, setPending] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
@@ -22,7 +20,7 @@ export function ContactForm() {
     setPending(true);
     setError("");
     try {
-      const result = await submit({ data: parsed.data });
+      const result = await submitInquiry(parsed.data);
       if (result.saved) {
         setSaved(true);
         form.reset();

@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { ArrowRight, ArrowUpRight, Layers3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { companies, type Company } from "@/content/portfolio";
@@ -45,8 +45,7 @@ export function CompanyGrid() {
         return (
           <article className="project" key={company.slug}>
             <Link
-              to="/work/$company"
-              params={{ company: company.slug }}
+              to={`/work/${company.slug}`}
               className="project-link"
               aria-label={`View ${company.name} portfolio`}
             >
@@ -118,7 +117,7 @@ export function NextCompany({ company }: { company: Company }) {
     <section className="next-company">
       <div className="container">
         <span className="eyebrow">Next company</span>
-        <Link to="/work/$company" params={{ company: company.slug }}>
+        <Link to={`/work/${company.slug}`}>
           <h2>{company.name}</h2>
           <ArrowRight strokeWidth={1} />
         </Link>

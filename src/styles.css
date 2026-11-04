@@ -2915,7 +2915,8 @@ a:hover .frame-body img,
 
   .product-feature .frame {
     order: 2;
-  }}
+  }
+}
 
 @media (max-width: 700px) {
   :root {

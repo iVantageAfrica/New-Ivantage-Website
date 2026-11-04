@@ -1,19 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { CompanyGrid, ConversationBand } from "@/components/portfolio-parts";
 import { EditorialHero } from "@/components/inner-page";
-import { pageHead } from "@/lib/page-head";
 import { PageMotion } from "@/components/page-motion";
+import { usePageMeta, pageTitle } from "@/lib/seo";
 
-export const Route = createFileRoute("/work/")({
-  head: () =>
-    pageHead(
-      "Our work",
-      "Explore iVantage company portfolios across banking, property, construction and transportation.",
-    ),
-  component: Work,
-});
+export function Work() {
+  usePageMeta(
+    pageTitle("Our work"),
+    "Explore iVantage company portfolios across banking, property, construction and transportation.",
+  );
 
-function Work() {
   return (
     <PageMotion>
       <main>

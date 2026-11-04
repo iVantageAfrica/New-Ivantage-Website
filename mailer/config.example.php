@@ -7,10 +7,13 @@ declare(strict_types=1);
  * config.php is git-ignored, so SMTP credentials never land in the repository.
  */
 return [
-    // Shared secret sent by the website in the X-Inquiry-Secret header.
-    // Generate one with: openssl rand -hex 32
-    // Then use the same value for INQUIRY_MAIL_SECRET in the site's .env
-    'secret' => 'CHANGE_ME_run_openssl_rand_hex_32',
+    // Every origin the site is served from, scheme + host (+ port) only, no path.
+    // Requests from anywhere else are rejected. Add your local dev server while
+    // testing and remove it before you go live.
+    'allowed_origins' => [
+        'https://ivantage.africa',
+        'http://localhost:8080',
+    ],
 
     // Where inquiries land, and the mailbox they are sent from.
     'to_email' => 'support@ivantage.africa',

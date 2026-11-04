@@ -1,29 +1,22 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
-import { findService, services } from "@/content/services";
-import { ConversationBand } from "@/components/portfolio-parts";
-import { pageHead } from "@/lib/page-head";
-import { PageMotion } from "@/components/page-motion";
-import { EditorialHero, ProcessSection, TalkAction } from "@/components/inner-page";
+import { Link, useParams } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
+import { ConversationBand } from "@/components/portfolio-parts";
+import { EditorialHero, ProcessSection, TalkAction } from "@/components/inner-page";
+import { PageMotion } from "@/components/page-motion";
+import { findService, services } from "@/content/services";
+import { usePageMeta, pageTitle } from "@/lib/seo";
+import { NotFound } from "./NotFound";
 
-export const Route = createFileRoute("/services/$service")({
-  beforeLoad: ({ params }) => {
-    if (!findService(params.service)) throw notFound();
-  },
-  head: ({ params }) => {
-    const service = findService(params.service);
-    return pageHead(
-      service?.name ?? "Service unavailable",
-      service?.copy ?? "Service unavailable.",
-    );
-  },
-  component: ServicePage,
-});
+export function ServiceDetail() {
+  const { service: slug } = useParams<{ service: string }>();
+  const service = slug ? findService(slug) : undefined;
 
-function ServicePage() {
-  const { service: slug } = Route.useParams();
-  const service = findService(slug);
-  if (!service) throw notFound();
+  usePageMeta(
+    pageTitle(service?.name ?? "Service unavailable"),
+    service?.copy ?? "Service unavailable.",
+  );
+
+  if (!service) return <NotFound />;
 
   return (
     <PageMotion key={service.slug}>
@@ -82,7 +75,7 @@ function ServicePage() {
               {services
                 .filter((item) => item.slug !== service.slug)
                 .map((item) => (
-                  <Link key={item.slug} to="/services/$service" params={{ service: item.slug }}>
+                  <Link key={item.slug} to={`/services/${item.slug}`}>
                     {item.shortName}
                     <ArrowUpRight size={18} />
                   </Link>

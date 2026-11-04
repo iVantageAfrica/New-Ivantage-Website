@@ -1,0 +1,12 @@
+# SPA fallback: anything that is not a real file or folder serves index.html so
+# /work/imperial-homes and /services/web-application reload directly.
+# Remove after switching the site to prerendered HTML.
+Options -Indexes -MultiViews
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
+</IfModule>
